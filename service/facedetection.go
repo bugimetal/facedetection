@@ -181,8 +181,8 @@ func (s *FaceDetection) detectRightPupil(face []int, imageParams *pigo.ImagePara
 
 // detectMouthPoints detect mouth points
 func (s *FaceDetection) detectMouthPoints(leftEye, rightEye *pigo.Puploc, imageParams *pigo.ImageParams) [][]int {
-	flp1 := s.flpCascades["lp84"][0].FindLandmarkPoints(leftEye, rightEye, *imageParams, 50, false)
-	flp2 := s.flpCascades["lp84"][0].FindLandmarkPoints(leftEye, rightEye, *imageParams, 50, true)
+	flp1 := s.flpCascades["lp84"][0].FindLandmarkPoints(leftEye, rightEye, *imageParams, 63, false)
+	flp2 := s.flpCascades["lp84"][0].FindLandmarkPoints(leftEye, rightEye, *imageParams, 63, true)
 	return [][]int{
 		[]int{flp1.Col, flp1.Row, int(flp1.Scale)},
 		[]int{flp2.Col, flp2.Row, int(flp2.Scale)},
@@ -194,8 +194,8 @@ func (s *FaceDetection) findFaces(imageParams *pigo.ImageParams) [][]int {
 	cascadeParams := pigo.CascadeParams{
 		MinSize:     50,
 		MaxSize:     imageParams.Cols,
-		ShiftFactor: 0.5,
-		ScaleFactor: 1.02,
+		ShiftFactor: 0.1,
+		ScaleFactor: 1.1,
 		ImageParams: *imageParams,
 	}
 
@@ -207,9 +207,14 @@ func (s *FaceDetection) findFaces(imageParams *pigo.ImageParams) [][]int {
 	detections = s.faceClassifier.ClusterDetections(detections, 0.2)
 
 	result := make([][]int, len(detections))
+	var facesPassedThreshold int
 
 	for i := 0; i < len(detections); i++ {
-		result[i] = append(result[i], detections[i].Row, detections[i].Col, detections[i].Scale, int(detections[i].Q))
+		// checking if model is sure enough about detected face
+		if detections[i].Q > 5.0 {
+			result[facesPassedThreshold] = append(result[i], detections[i].Row, detections[i].Col, detections[i].Scale, int(detections[i].Q))
+			facesPassedThreshold++
+		}
 	}
-	return result
+	return result[:facesPassedThreshold]
 }
