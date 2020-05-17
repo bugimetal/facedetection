@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/bugimetal/facedetection"
+
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
-
-	"github.com/bugimetal/facedetection"
 )
 
 func (handler *Handler) faceDetection(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {

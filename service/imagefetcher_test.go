@@ -66,6 +66,11 @@ func TestImageFetcher_FetchImageByURL(t *testing.T) {
 			args:    args{url: helloWorldServer.URL},
 			wantErr: true,
 		},
+		{
+			name:    "bad url provided",
+			args:    args{url: "bad url"},
+			wantErr: true,
+		},
 	}
 
 	for _, tt := range tests {

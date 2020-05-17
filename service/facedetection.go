@@ -4,11 +4,12 @@ import (
 	"io"
 	"io/ioutil"
 	"path/filepath"
+	"runtime"
+
+	"github.com/bugimetal/facedetection"
 
 	pigo "github.com/esimov/pigo/core"
 	"github.com/sirupsen/logrus"
-
-	"github.com/bugimetal/facedetection"
 )
 
 // FaceDetection service responsible for face detection
@@ -27,7 +28,11 @@ func NewFaceDetection() (*FaceDetection, error) {
 	var err error
 	fd := &FaceDetection{}
 
-	fd.faceCascade, err = ioutil.ReadFile(filepath.Join("cascade", "facefinder"))
+	// to read cascade files we need to build proper path
+	_, b, _, _ := runtime.Caller(0)
+	thisPackagePath := filepath.Dir(b)
+
+	fd.faceCascade, err = ioutil.ReadFile(filepath.Join(thisPackagePath, "..", "cascade", "facefinder"))
 	if err != nil {
 		logrus.Errorf("error reading the cascade file: %v", err)
 		return nil, err
@@ -42,7 +47,7 @@ func NewFaceDetection() (*FaceDetection, error) {
 		return nil, err
 	}
 
-	fd.puplocCascade, err = ioutil.ReadFile(filepath.Join("cascade", "puploc"))
+	fd.puplocCascade, err = ioutil.ReadFile(filepath.Join(thisPackagePath, "..", "cascade", "puploc"))
 	if err != nil {
 		logrus.Errorf("Error reading the puploc cascade file: %s", err)
 		return nil, err
@@ -53,7 +58,7 @@ func NewFaceDetection() (*FaceDetection, error) {
 		return nil, err
 	}
 
-	fd.flpCascades, err = fd.puplocClassifier.ReadCascadeDir(filepath.Join("cascade", "lps"))
+	fd.flpCascades, err = fd.puplocClassifier.ReadCascadeDir(filepath.Join(thisPackagePath, "..", "cascade", "lps"))
 	if err != nil {
 		logrus.Errorf("Error unpacking the facial landmark detection cascades: %s", err)
 		return nil, err
@@ -75,9 +80,6 @@ func (s *FaceDetection) Detect(image io.Reader) (facedetection.FaceDetection, er
 	if len(foundFaces) == 0 {
 		return detectedFaces, facedetection.ErrNoFacesFound
 	}
-
-	// TODO: is this needed?
-	detectedFaces.Faces = make([]facedetection.Face, 0)
 
 	for _, faceCoords := range foundFaces {
 		row, col, scale := faceCoords[1], faceCoords[0], faceCoords[2]
@@ -134,7 +136,7 @@ func (s *FaceDetection) Detect(image io.Reader) (facedetection.FaceDetection, er
 func (s *FaceDetection) buildImageParams(image io.Reader) (*pigo.ImageParams, error) {
 	src, err := pigo.DecodeImage(image)
 	if err != nil {
-		logrus.Warnf("Cannot open the image file: %v", err)
+		logrus.Warnf("cannot open the image: %v", err)
 		return nil, facedetection.ErrCantReadImage
 	}
 

@@ -6,7 +6,6 @@ import (
 	"fmt"
 	_ "image/jpeg"
 	_ "image/png"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,6 +14,8 @@ import (
 
 	"github.com/bugimetal/facedetection/handler"
 	"github.com/bugimetal/facedetection/service"
+
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -55,16 +56,16 @@ func main() {
 	select {
 	// If the HTTP server returned an error, exit here.
 	case err := <-httpServerErrorChan:
-		log.Printf("HTTP server error: %s", err)
+		logrus.Printf("HTTP server error: %s", err)
 	// If a termination signal was received, shutdown the server.
 	case sig := <-signalChan:
-		log.Printf("Signal received: %s", sig)
+		logrus.Printf("Signal received: %s", sig)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if err := httpServer.Shutdown(ctx); err != nil {
-		log.Fatalf("HTTP Server graceful shutdown failed with an error: %s\n", err)
+		logrus.Fatalf("HTTP Server graceful shutdown failed with an error: %s\n", err)
 	}
 }

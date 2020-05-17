@@ -51,7 +51,7 @@ async function FetchAndDrawFaces(image, e) {
   canvas.style.left = img.offsetLeft + 'px';
   canvas.style.top = img.offsetTop + 'px';
 
-  let url = 'http://16a0bdca.ngrok.io/v1/facedetection/' + btoa('http://16a0bdca.ngrok.io' + image.url);
+  let url = 'http://localhost:8080/v1/facedetection/' + btoa('http://localhost:8080' + image.url);
 
   let response = await fetch(url);
   let detected = await response.json();
