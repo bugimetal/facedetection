@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Detection Demo</title>
+    <style>
+        body { background-color: rgb(51, 54, 66); color: darkgray; }
+        #image-preview { }
+        #image-preview img { width: 150px; height: 100px; cursor: pointer; margin: 2px; border: 1px solid darkgray; }
+        #demo { visibility: hidden; }
+        #detect-faces-button { width: 100px; height: 30px; border-radius: 8px; background-color: #8705ff; line-height: 30px; text-align: center; cursor: pointer; }
+        #image-to-detect { margin-top: 10px; }
+    </style>
+    <script src="demo.js"></script>
+    <script>
+        let images = [
+          {url: "/static/test_image1.jpg", width: 1024, height: 772},
+          {url: "/static/test_image2.jpg", width: 497, height: 620},
+          {url: "/static/test_image3.jpeg", width: 1400, height: 788},
+          {url: "/static/test_image4.png", width: 461, height: 461},
+        ];
+
+        document.addEventListener('DOMContentLoaded', function(){
+          DrawImagePreviews(images, 'image-preview');
+        }, false);
+    </script>
+</head>
+<body>
+    <h1>Welcome to Face Detection demo</h1>
+    <h2>Please, choose image to test:</h2>
+    <div id="image-preview"></div>
+    <div id="demo">
+        <br/>
+        <div id="detect-faces-button">Detect faces</div>
+        <div id="detect-error"></div>
+        <div id="image-to-detect"></div>
+    </div>
+</body>
+</html>
