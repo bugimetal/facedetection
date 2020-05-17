@@ -29,7 +29,7 @@ When building the golang project I like to use best practices from those style g
 
 This project code structure looks following:
 
-![project layout](web/blog/project_layout.png=400x)
+![project layout](web/blog/project_layout.png =400x)
 
 * `cmd/facedetection` - contains main application. 
 The flow is simple, it creates the services, then it creates a handler and passes services as a dependency to it. After the handler is created, it listens for a new connections.
@@ -83,8 +83,8 @@ Response:
 
 We can use those coordinates from response and try to draw results for the given image.
 
-![example image](web/blog/example_image.png=400x)
-![example image with detections](web/blog/example_image_with_detections.png=400x)
+![example image](web/blog/example_image.png =400x)
+![example image with detections](web/blog/example_image_with_detections.png =400x)
 
 To see more examples of how it works I've created a small demo with several pictures.
 In order to test it just start application locally with `go run cmd/facedetection/main.go` and visit [Demo page](http://localhost:8080/web/demo.html)
@@ -96,8 +96,8 @@ The `pigo` library has some detection configuration, like: detection window move
 I've spent some time finding the best options, but it still doesn't work for all the images, especially if we deal with the faces that are rotated.
 The library provides the ability to search for rotated faces, but the result is not great, and if you initialize faces classifier with angle configuration it doesn't work great for not angled images.
 
-![example angle image](web/blog/example_angle.png=200x)
-![example angle image with detections](web/blog/example_angle_with_detections.png=200px)
+![example angle image](web/blog/example_angle.png =200x)
+![example angle image with detections](web/blog/example_angle_with_detections.png =200px)
 
 ## Final Thoughts
 
