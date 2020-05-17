@@ -96,8 +96,8 @@ The `pigo` library has some detection configuration, like: detection window move
 I've spent some time finding the best options, but it still doesn't work for all the images, especially if we deal with the faces that are rotated.
 The library provides the ability to search for rotated faces, but the result is not great, and if you initialize faces classifier with angle configuration it doesn't work great for not angled images.
 
-![example angle image](web/blog/example_angle.png =200x)
-![example angle image with detections](web/blog/example_angle_with_detections.png =200px)
+<img src="web/blog/example_angle.png" width="200px" />
+<img src="web/blog/example_angle_with_detections.png" width="200px">
 
 ## Final Thoughts
 
