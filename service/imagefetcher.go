@@ -21,6 +21,7 @@ type ImageFetcher struct {
 	client http.Client
 }
 
+// NewImageFetcher new ImageFetcher service which is responsible for fetching and validation images
 func NewImageFetcher() *ImageFetcher {
 	return &ImageFetcher{
 		client: http.Client{
@@ -29,6 +30,7 @@ func NewImageFetcher() *ImageFetcher {
 	}
 }
 
+// FetchImageByURL fetches image content by given URL. Validates if the downloaded file has suitable image format
 func (s *ImageFetcher) FetchImageByURL(url string) (io.Reader, error) {
 	resp, err := http.Get(url)
 	if err != nil {
