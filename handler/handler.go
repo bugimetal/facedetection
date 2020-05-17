@@ -46,7 +46,7 @@ func New(services Services) *Handler {
 	router.GET("/v1/facedetection/:image_url", handler.faceDetection)
 
 	// Serve static demo files
-	router.ServeFiles("/static/*filepath", http.Dir("./static/"))
+	router.ServeFiles("/web/*filepath", http.Dir("./web/"))
 
 	handler.http = cors.Default().Handler(router)
 

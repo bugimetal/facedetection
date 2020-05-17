@@ -62,7 +62,7 @@ go run ./cmd/facedetection/
 
 ## 3. Demo.
 
-In order to see demo for the service, [run the service locally](#2-how-to-run-service-locally) and visit [Demo page](http://localhost:8080/static/demo.html)
+In order to see demo for the service, [run the service locally](#2-how-to-run-service-locally) and visit [Demo page](http://localhost:8080/web/demo.html)
 
 ## 4. How to run tests.
 

@@ -10,14 +10,15 @@
         #demo { visibility: hidden; }
         #detect-faces-button { width: 100px; height: 30px; border-radius: 8px; background-color: #8705ff; line-height: 30px; text-align: center; cursor: pointer; }
         #image-to-detect { margin-top: 10px; }
+        #detect-error { color: #ec2027; margin: 5px; font-weight: bold; }
     </style>
-    <script src="demo.js"></script>
+    <script src="demo.js?v=1"></script>
     <script>
         let images = [
-          {url: "/static/test_image1.jpg", width: 1024, height: 772},
-          {url: "/static/test_image2.jpg", width: 497, height: 620},
-          {url: "/static/test_image3.jpeg", width: 1400, height: 788},
-          {url: "/static/test_image4.png", width: 461, height: 461},
+          {url: "/web/test_image1.jpg", width: 1024, height: 772},
+          {url: "/web/test_image2.jpg", width: 497, height: 620},
+          {url: "/web/test_image3.jpeg", width: 1400, height: 788},
+          {url: "/web/test_image4.png", width: 461, height: 461},
         ];
 
         document.addEventListener('DOMContentLoaded', function(){
