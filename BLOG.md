@@ -1,7 +1,7 @@
 Face Detection API in golang
 =====
 
-Face Detection service was developed with the idea to provide simple API to the end user which allows detecting face, and it's parts like eyes and mouth.
+Face Detection service has been developed with the idea to provide simple API to the end user which allows detecting face, and it's parts, like eyes and mouth.
 This simple API can be used to build more advanced services like face blurring or face masks, etc.
 
 Golang has been chosen as a language to implement this service.
@@ -9,41 +9,39 @@ Golang has been chosen as a language to implement this service.
 ## Face detection library
 
 First thing which comes to my mind when I'm thinking about image processing and computer vision is OpenCV. 
-I was already working with this library when I was playing around with C++. Golang has package to use OpenCV 4, it can be found here: [gocv](https://github.com/hybridgroup/gocv).
+I was already working with this library when I was playing around with C++. Golang has a package to use OpenCV 4, it can be found here: [gocv](https://github.com/hybridgroup/gocv).
 Although, it requires additional software to be installed on your computer, so I've decided to take a look on other options, there are several of them:
 
 * [go-face](https://github.com/Kagami/go-face)
 * [pigo](https://github.com/esimov/pigo)
 * [gocv](https://github.com/hybridgroup/gocv)
 
-The only library which doesn't require any additional software is `pigo`. I like pure go libraries and decided to use this one as my main face detection library.
-
-Now, as library is chosen we can implement the service.
+The only library which doesn't require any additional software is `pigo`. I like pure Go libraries, therefore I've decided to use this one as my main face detection library.
 
 ## Project structure
 
-When building the golang project I like to use best practices from those style guides:
+When building the Golang project, I like to use best practices from those style guides:
 
 * [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 * [Style guideline for Go packages](https://rakyll.org/style-packages/)
 
-This project code structure looks following:
+This project code structure looks as following:
 
-![project layout](web/blog/project_layout.png =400x)
+<img src="web/blog/project_layout.png" width="400px" />
 
 * `cmd/facedetection` - contains main application. 
-The flow is simple, it creates the services, then it creates a handler and passes services as a dependency to it. After the handler is created, it listens for a new connections.
+The flow is simple, it creates the services, then it creates a handler and passes services as a dependency to it. After the handler is created, it listens for the new connections.
 * `handler` - contains everything that is related to serving HTTP requests, like: router, error handling and http handlers itself.
 Handler has services as a dependency, it uses them when processing the request. 
-* `service` - contains services with main business logic. For this application we have two services: `ImageFetcher` and `FaceDetection` services. 
-First is responsible for fetching the image from the internet by url and validating if the actual content is an image. Second service is responsible for actual face recognition. 
+* `service` - contains services with main business logic. For this application we have two services: `ImageFetcher` and `FaceDetection`. 
+First is responsible for fetching the image from the internet by url and validating if the actual content is an image. Second service is responsible for the actual face recognition. 
 * `web` - contains static files for demo purposes.
-* `facedetection.go` - in this file represented main structures that can be used by any parts of the application. Also, common errors that can be used by services specified here.
-* `cascade` - this directory contains classifiers that are required by the face detection library.
+* `facedetection.go` - this file contains the main structures that can be used by any part of the application. Also, the common errors that can be used by services are specified here.
+* `cascade` - this directory contains classifiers that are required by the face detection library `pigo`.
 
 ## How it works
 
-Service is exposing single API endpoint which only requires image URL to provide. In the response it will return json with the list of detected faces.
+Service exposes single API endpoint which only requires image URL to provide. In the response it returns json with the list of detected faces.
 
 Example usage:
 ```
@@ -87,13 +85,13 @@ We can use those coordinates from response and try to draw results for the given
 <img src="web/blog/example_image_with_detections.png" width="400px" alt="example image with detections" />
 
 To see more examples of how it works I've created a small demo with several pictures.
-In order to test it just start application locally with `go run cmd/facedetection/main.go` and visit [Demo page](http://localhost:8080/web/demo.html)
+In order to test it, just start the application locally with `go run cmd/facedetection/main.go` and visit [Demo page](http://localhost:8080/web/demo.html)
 
-## Face Detection not ideal
+## Face Detection is not ideal
 
-As you see in the example above and in the demo, the detection itself is good but not ideal. It doesn't recognise some faces, or it has issues with recognising eyes and mouth position.
-The `pigo` library has some detection configuration, like: detection window move or scale factor to search faces. 
-I've spent some time finding the best options, but it still doesn't work for all the images, especially if we deal with the faces that are rotated.
+As you see in the example above and in the demo, the detection itself is good but not ideal. It doesn't recognize some faces, or it has issues with recognizing eyes and mouth position.
+The `pigo` library has some detection configuration, e.g.: detection window move or scale factor to search faces. 
+I've spent some time finding the best options, but still it doesn't work for all the images perfectly, especially if we deal with the faces that are rotated.
 The library provides the ability to search for rotated faces, but the result is not great, and if you initialize faces classifier with angle configuration it doesn't work great for not angled images.
 
 <img src="web/blog/example_angle.png" width="200px" />
@@ -101,7 +99,7 @@ The library provides the ability to search for rotated faces, but the result is 
 
 ## Final Thoughts
 
-I had a fun time implementing this service, although it was not easy. 
-The `pigo` library is not well documented, but luckily author has other projects that are using `pigo`, so it gives us better overview of how this library can be used.
+I had fun time implementing this service, although it was not easy. 
+The `pigo` library is not well documented, but luckily the author has other projects that are using `pigo`, so it gives us better overview of how this library can be used.
 
 
