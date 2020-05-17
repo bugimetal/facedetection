@@ -1,16 +1,10 @@
-Write a short, yet technical blog post outlining how to build an image analysis API using Go and be sure to incorporate the following
-Introduction
-Directory and code structure
-Common "gotchas"
-Conclusion / Final Thoughts
-
 Face Detection API in golang
 =====
 
 Face Detection service was developed with the idea to provide simple API to the end user which allows detecting face, and it's parts like eyes and mouth.
 This simple API can be used to build more advanced services like face blurring or face masks, etc.
 
-Golang was chosen as a language to implement this service.
+Golang has been chosen as a language to implement this service.
 
 ## Face detection library
 
@@ -35,7 +29,7 @@ When building the golang project I like to use best practices from those style g
 
 This project code structure looks following:
 
-![project layout](web/blog/project_layout.png)
+![project layout](web/blog/project_layout.png=400x)
 
 * `cmd/facedetection` - contains main application. 
 The flow is simple, it creates the services, then it creates a handler and passes services as a dependency to it. After the handler is created, it listens for a new connections.
@@ -45,5 +39,69 @@ Handler has services as a dependency, it uses them when processing the request.
 First is responsible for fetching the image from the internet by url and validating if the actual content is an image. Second service is responsible for actual face recognition. 
 * `web` - contains static files for demo purposes.
 * `facedetection.go` - in this file represented main structures that can be used by any parts of the application. Also, common errors that can be used by services specified here.
-* `cascade` - this directory contains classifiers that needed for face detection library.
+* `cascade` - this directory contains classifiers that are required by the face detection library.
+
+## How it works
+
+Service is exposing single API endpoint which only requires image URL to provide. In the response it will return json with the list of detected faces.
+
+Example usage:
+```
+curl http://localhost:8080/v1/facedetection/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2VzaW1vdi9waWdvL21hc3Rlci90ZXN0ZGF0YS9zYW1wbGUuanBn
+```
+Response:
+```json
+{
+    "faces": [
+        {
+            "bounds": {
+                "x": 573,
+                "y": 79,
+                "height": 52,
+                "width": 52
+            },
+            "mouth": {
+                "x": 596,
+                "y": 125,
+                "height": 1,
+                "width": 18
+            },
+            "left_eye": {
+                "x": 595,
+                "y": 103,
+                "scale": 0
+            },
+            "right_eye": {
+                "x": 615,
+                "y": 103,
+                "scale": 0
+            }
+        }
+    ]
+}
+```
+
+We can use those coordinates from response and try to draw results for the given image.
+
+![example image](web/blog/example_image.png=400x)
+![example image with detections](web/blog/example_image_with_detections.png=400x)
+
+To see more examples of how it works I've created a small demo with several pictures.
+In order to test it just start application locally with `go run cmd/facedetection/main.go` and visit [Demo page](http://localhost:8080/web/demo.html)
+
+## Face Detection not ideal
+
+As you see in the example above and in the demo, the detection itself is good but not ideal. It doesn't recognise some faces, or it has issues with recognising eyes and mouth position.
+The `pigo` library has some detection configuration, like: detection window move or scale factor to search faces. 
+I've spent some time finding the best options, but it still doesn't work for all the images, especially if we deal with the faces that are rotated.
+The library provides the ability to search for rotated faces, but the result is not great, and if you initialize faces classifier with angle configuration it doesn't work great for not angled images.
+
+![example angle image](web/blog/example_angle.png=200x)
+![example angle image with detections](web/blog/example_angle_with_detections.png=200px)
+
+## Final Thoughts
+
+I had a fun time implementing this service, although it was not easy. 
+The `pigo` library is not well documented, but luckily author has other projects that are using `pigo`, so it gives us better overview of how this library can be used.
+
 
