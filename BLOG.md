@@ -20,7 +20,7 @@ The only library which doesn't require any additional software is `pigo`. I like
 
 ## Project structure
 
-Go doesn't have official guidelines of how to struct your project, but I like to use best practices from those style guides:
+Go doesn't have official guidelines of how to structure your project, but I like to use best practices from those style guides:
 
 * [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 * [Style guideline for Go packages](https://rakyll.org/style-packages/)
