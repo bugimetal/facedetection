@@ -1,8 +1,6 @@
 package service
 
 import (
-	_ "image/jpeg"
-	_ "image/png"
 	"io"
 	"io/ioutil"
 	"path/filepath"
@@ -13,6 +11,7 @@ import (
 	"github.com/bugimetal/facedetection"
 )
 
+// FaceDetection service responsible for face detection
 type FaceDetection struct {
 	faceCascade   []byte
 	puplocCascade []byte

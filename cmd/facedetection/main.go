@@ -4,6 +4,8 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	_ "image/jpeg"
+	_ "image/png"
 	"log"
 	"net/http"
 	"os"

@@ -17,6 +17,7 @@ var (
 	}
 )
 
+// ImageFetcher service responsible for fetching images
 type ImageFetcher struct {
 	client http.Client
 }
