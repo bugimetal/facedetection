@@ -83,8 +83,8 @@ Response:
 
 We can use those coordinates from response and try to draw results for the given image.
 
-![example image](web/blog/example_image.png =400x)
-![example image with detections](web/blog/example_image_with_detections.png =400x)
+<img src="web/blog/example_image.png" width="400px" alt="example image" />
+<img src="web/blog/example_image_with_detections.png" width="400px" alt="example image with detections" />
 
 To see more examples of how it works I've created a small demo with several pictures.
 In order to test it just start application locally with `go run cmd/facedetection/main.go` and visit [Demo page](http://localhost:8080/web/demo.html)
@@ -97,7 +97,7 @@ I've spent some time finding the best options, but it still doesn't work for all
 The library provides the ability to search for rotated faces, but the result is not great, and if you initialize faces classifier with angle configuration it doesn't work great for not angled images.
 
 <img src="web/blog/example_angle.png" width="200px" />
-<img src="web/blog/example_angle_with_detections.png" width="200px">
+<img src="web/blog/example_angle_with_detections.png" width="200px" />
 
 ## Final Thoughts
 
