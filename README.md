@@ -7,7 +7,7 @@ Service will also detect eyes (pupil) points and mouth area for every detected f
 
 ## 1. The API.
 
-The actual API has only 1 endpoint which require no authentication.
+The actual API has only 1 endpoint which requires no authentication.
 
 |Method|Endpoint                                     |Description                                           |
 |------|---------------------------------------------|------------------------------------------------------|
