@@ -102,5 +102,5 @@ The library provides the ability to search for rotated faces, but the result is 
 I had fun time implementing this service, although it was not easy. 
 The `pigo` library is not well documented, but luckily the author has other projects that are using `pigo`, so it gives us better overview of how this library can be used.
 
-I've chosen to use `pigo` in this service, but we're not limited with only this option. In order to improve detection quality we may try to use different image processing libraries.
-Also, if we need real-time detection maybe the better option would be to use OpenCV. 
+I've chosen to use `pigo` in this service, but we're not limited with only this option. In order to improve detection quality, we may try using different image processing libraries.
+Also, when the real-time detection is needed, the better option might be to use OpenCV.
