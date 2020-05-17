@@ -12,6 +12,7 @@ The actual API has only 1 endpoint which require no authentication.
 |Method|Endpoint                                     |Description                                           |
 |------|---------------------------------------------|------------------------------------------------------|
 |GET   |/v1/facedetection/:image_url_base64_encoded* |Detect faces on given image and returns json response |
+
 *provided image URL should be base64 encoded
 
 Example request:
