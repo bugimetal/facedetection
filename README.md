@@ -57,6 +57,7 @@ Example response:
 
 It's super simple, service has no configuration required to start.
 
+Clone the project and then run this command inside the project folder:
 ```
 go run ./cmd/facedetection/
 ```
