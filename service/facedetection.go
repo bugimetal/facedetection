@@ -94,19 +94,17 @@ func (s *FaceDetection) Detect(image io.Reader) (facedetection.FaceDetection, er
 
 		rightEye := s.detectRightPupil(faceCoords, imageParams)
 		if rightEye != nil {
-			col, row, scale = rightEye.Col, rightEye.Row, int(rightEye.Scale/8)
-			face.RightEye = facedetection.Eye{X: col, Y: row, Scale: scale}
+			face.RightEye = facedetection.Eye{X: rightEye.Col, Y: rightEye.Row, Scale: int(rightEye.Scale / 8)}
 		}
 
 		leftEye := s.detectLeftPupil(faceCoords, imageParams)
 		if leftEye != nil {
-			col, row, scale = leftEye.Col, leftEye.Row, int(leftEye.Scale/8)
-			face.LeftEye = facedetection.Eye{X: col, Y: row, Scale: scale}
+			face.LeftEye = facedetection.Eye{X: leftEye.Col, Y: leftEye.Row, Scale: int(leftEye.Scale / 8)}
 		}
 
 		if rightEye != nil && leftEye != nil {
-			mouth := s.detectMouthPoints(leftEye, rightEye, imageParams)
-			p1, p2 := mouth[0], mouth[1]
+			mouthPoints := s.detectMouthPoints(leftEye, rightEye, imageParams)
+			p1, p2 := mouthPoints[0], mouthPoints[1]
 
 			width := p2[0] - p1[0]
 			height := p2[1] - p1[1]

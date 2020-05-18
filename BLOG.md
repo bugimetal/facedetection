@@ -97,6 +97,9 @@ The library provides the ability to search for rotated faces, but the result is 
 <img src="web/blog/example_angle.png" width="200px" />
 <img src="web/blog/example_angle_with_detections.png" width="200px" />
 
+On this example, the mouth is drawn as a straight line, although it is possible to calculate the lean angle between two points and rotate the mouth rectangle.
+This can be added to the newer version of the API. 
+
 ## Final Thoughts
 
 I had a fun time implementing this service, although it was not easy. 

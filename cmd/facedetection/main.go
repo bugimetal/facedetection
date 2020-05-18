@@ -32,6 +32,7 @@ func main() {
 		return
 	}
 
+	// Handler handles the incoming requests using services to perform business logic operations
 	h := handler.New(handler.Services{
 		FaceDetection: services.FaceDetection,
 		ImageFetcher:  services.ImageFetcher,
